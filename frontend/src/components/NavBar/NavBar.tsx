@@ -6,13 +6,19 @@ import Link from "next/link";
 
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
+import { useAppDispatch, useAppSelector } from "@/app/redux";
+import { setIsSideBarCollapsed } from "@/state";
 
 const NavBar = () => {
+  const dispatch = useAppDispatch();
+  const isSideBarCollapsed = useAppSelector(
+    (state) => state.global.isSideBarCollapsed,
+  );
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [mobileNavActive, setMobileNavActive] = useState(false);
 
   const toggleMobileNav = () => {
-    setMobileNavActive(!mobileNavActive);
+    dispatch(setIsSideBarCollapsed(!isSideBarCollapsed));
   };
   const pathname = usePathname();
 
@@ -63,7 +69,7 @@ const NavBar = () => {
           <div className="button bg-red-400 text-white">Logout</div>
         )}
       </div>
-      {mobileNavActive && (
+      {isSideBarCollapsed && (
         <div className="min-h-1/4 fixed right-0 top-12 z-50 w-1/2 bg-blue-primary p-5">
           <div className="flex flex-col gap-5">
             <div
