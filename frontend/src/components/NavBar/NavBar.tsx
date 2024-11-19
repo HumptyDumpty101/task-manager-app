@@ -4,8 +4,16 @@ import { BiSolidNotepad } from "react-icons/bi";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
+import { GiHamburgerMenu } from "react-icons/gi";
+import { IoMdClose } from "react-icons/io";
+
 const NavBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [mobileNavActive, setMobileNavActive] = useState(false);
+
+  const toggleMobileNav = () => {
+    setMobileNavActive(!mobileNavActive);
+  };
   const pathname = usePathname();
 
   const isLoginPage = pathname.includes("login");
@@ -28,7 +36,7 @@ const NavBar = () => {
                   isLoginPage
                     ? "bg-white text-blue-primary"
                     : "bg-blue-primary text-white"
-                }`}
+                } hidden md:block`}
               >
                 Login
               </div>
@@ -39,16 +47,44 @@ const NavBar = () => {
                   isSignupPage
                     ? "bg-white text-blue-primary"
                     : "bg-blue-primary text-white"
-                }`}
+                } hidden md:block`}
               >
                 Signup
               </div>
             </Link>
+            <div
+              className="block cursor-pointer rounded-full bg-white p-2 text-blue-primary md:hidden"
+              onClick={toggleMobileNav}
+            >
+              <GiHamburgerMenu></GiHamburgerMenu>
+            </div>
           </>
         ) : (
           <div className="button bg-red-400 text-white">Logout</div>
         )}
       </div>
+      {mobileNavActive && (
+        <div className="min-h-1/4 fixed right-0 top-12 z-50 w-1/2 bg-blue-primary p-5">
+          <div className="flex flex-col gap-5">
+            <div
+              className="w-fit rounded-full bg-white p-1 text-black"
+              onClick={toggleMobileNav}
+            >
+              <IoMdClose></IoMdClose>
+            </div>
+            <Link href={"/login"}>
+              <div className="bg-blue-primary font-semibold text-white">
+                Login
+              </div>
+            </Link>
+            <Link href={"/signup"}>
+              <div className="bg-blue-primary font-semibold text-white">
+                Signup
+              </div>
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

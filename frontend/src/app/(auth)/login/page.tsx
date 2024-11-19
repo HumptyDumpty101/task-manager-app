@@ -30,7 +30,7 @@ const Page = () => {
 
           <div className="flex flex-col items-center justify-center gap-3">
             <p>
-              Don&quot;t have an account?{" "}
+              Don&apos;t have an account?{" "}
               <span className="text-blue-primary">
                 <Link href={"/signup"}>Signup</Link>
               </span>
